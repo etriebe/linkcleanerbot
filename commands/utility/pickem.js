@@ -5,6 +5,7 @@ const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const execFile = promisify(require('child_process').execFile);
 const execFileSync = promisify(require('child_process').execFileSync);
+const Discord = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -157,8 +158,19 @@ module.exports = {
 			}
 
 			await interaction.deferReply();
-			const result = await RunArbem(args);
-			await interaction.editReply(codeBlock(result));
+			let result = await RunArbem(args);
+			if (result.length > 2000)
+			{
+				const fileName = "results.txt";
+				fs.writeFileSync(fileName, result);
+				const file = new Discord.AttachmentBuilder(fileName);
+				await interaction.editReply("Attaching results file...");
+				await interaction.channel.send({ files: [file] });
+			}
+			else
+			{
+				await interaction.editReply(codeBlock(result));
+			}
 		}
 	},
 };

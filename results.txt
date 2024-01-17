@@ -1,0 +1,54 @@
+Query Results (from 2620 total picks)
+Filtering to teams: "CHI"
+Brian Mattocks       2023/09/10 1:25 PM   GB :38  @ CHI:20  (Spread= -1.5)  - Pick=CHI 
+Brian Perfette       2023/09/10 1:25 PM   GB :38  @ CHI:20  (Spread= -1.5)  - Pick=CHI 
+Brian Perfette       2023/09/17 10:00 AM  CHI:17  @ TB :27  (Spread= -2.5)  - Pick=CHI 
+Larsen Mettler       2023/10/01 10:00 AM  DEN:31  @ CHI:28  (Spread= 3.5)   - Pick=CHI 
+Brian Perfette       2023/10/01 10:00 AM  DEN:31  @ CHI:28  (Spread= 3.5)   - Pick=CHI 
+Brian Mattocks       2023/10/15 10:00 AM  MIN:19  @ CHI:13  (Spread= 2.5)   - Pick=CHI 
+Tim Lennox           2023/10/15 10:00 AM  MIN:19  @ CHI:13  (Spread= 2.5)   - Pick=CHI 
+Louis Brace          2023/10/15 10:00 AM  MIN:19  @ CHI:13  (Spread= 2.5)   - Pick=CHI 
+James Taylor         2023/10/15 10:00 AM  MIN:19  @ CHI:13  (Spread= 2.5)   - Pick=CHI 
+Conor Foley          2023/10/22 10:00 AM  LV :12  @ CHI:30  (Spread= 3.5)   - Pick=CHI 
+Eric Triebe          2023/10/22 10:00 AM  LV :12  @ CHI:30  (Spread= 3.5)   - Pick=CHI 
+Azar Koulibaly       2023/10/22 10:00 AM  LV :12  @ CHI:30  (Spread= 3.5)   - Pick=CHI 
+Kevin Roberts        2023/10/22 10:00 AM  LV :12  @ CHI:30  (Spread= 3.5)   - Pick=CHI 
+James Taylor         2023/10/22 10:00 AM  LV :12  @ CHI:30  (Spread= 3.5)   - Pick=CHI 
+Austin Hargarten     2023/10/29 5:20 PM   CHI:13  @ LAC:30  (Spread= -8.5)  - Pick=CHI 
+Conor Foley          2023/11/09 5:15 PM   CAR:13  @ CHI:16  (Spread= -3.5)  - Pick=CHI 
+Eric Triebe          2023/11/09 5:15 PM   CAR:13  @ CHI:16  (Spread= -3.5)  - Pick=CHI 
+Brian Mattocks       2023/11/09 5:15 PM   CAR:13  @ CHI:16  (Spread= -3.5)  - Pick=CHI 
+Tim Lennox           2023/11/09 5:15 PM   CAR:13  @ CHI:16  (Spread= -3.5)  - Pick=CHI 
+Nathan Michel        2023/11/09 5:15 PM   CAR:13  @ CHI:16  (Spread= -3.5)  - Pick=CHI 
+Steve Volchko        2023/11/09 5:15 PM   CAR:13  @ CHI:16  (Spread= -3.5)  - Pick=CHI 
+Conor Foley          2023/11/19 10:00 AM  CHI:26  @ DET:31  (Spread= -10.5) - Pick=CHI 
+Eric Triebe          2023/11/19 10:00 AM  CHI:26  @ DET:31  (Spread= -10.5) - Pick=CHI 
+Azar Koulibaly       2023/11/19 10:00 AM  CHI:26  @ DET:31  (Spread= -10.5) - Pick=CHI 
+Kevin Roberts        2023/11/19 10:00 AM  CHI:26  @ DET:31  (Spread= -10.5) - Pick=CHI 
+Steve Volchko        2023/11/19 10:00 AM  CHI:26  @ DET:31  (Spread= -10.5) - Pick=CHI 
+Nicken Sheth         2023/11/19 10:00 AM  CHI:26  @ DET:31  (Spread= -10.5) - Pick=CHI 
+Sean Day             2023/11/19 10:00 AM  CHI:26  @ DET:31  (Spread= -10.5) - Pick=CHI 
+Brian Mattocks       2023/11/27 5:15 PM   CHI:12  @ MIN:10  (Spread= -3.5)  - Pick=CHI 
+Conor Foley          2023/12/10 10:00 AM  DET:13  @ CHI:28  (Spread= 3.5)   - Pick=CHI 
+Eric Triebe          2023/12/10 10:00 AM  DET:13  @ CHI:28  (Spread= 3.5)   - Pick=CHI 
+Sean Day             2023/12/10 10:00 AM  DET:13  @ CHI:28  (Spread= 3.5)   - Pick=CHI 
+Eric Triebe          2023/12/17 10:00 AM  CHI:17  @ CLE:20  (Spread= -3.5)  - Pick=CHI 
+Azar Koulibaly       2023/12/17 10:00 AM  CHI:17  @ CLE:20  (Spread= -3.5)  - Pick=CHI 
+Tom Wyrwich          2023/12/17 10:00 AM  CHI:17  @ CLE:20  (Spread= -3.5)  - Pick=CHI 
+Austin Hargarten     2023/12/24 1:25 PM   AZ :16  @ CHI:27  (Spread= -4.5)  - Pick=CHI 
+Louis Brace          2023/12/24 1:25 PM   AZ :16  @ CHI:27  (Spread= -4.5)  - Pick=CHI 
+Conor Foley          2023/12/31 10:00 AM  ATL:17  @ CHI:37  (Spread= -2.5)  - Pick=CHI 
+Eric Triebe          2023/12/31 10:00 AM  ATL:17  @ CHI:37  (Spread= -2.5)  - Pick=CHI 
+Brian Mattocks       2023/12/31 10:00 AM  ATL:17  @ CHI:37  (Spread= -2.5)  - Pick=CHI 
+Austin Hargarten     2023/12/31 10:00 AM  ATL:17  @ CHI:37  (Spread= -2.5)  - Pick=CHI 
+Stephen Kliff        2023/12/31 10:00 AM  ATL:17  @ CHI:37  (Spread= -2.5)  - Pick=CHI 
+Louis Brace          2023/12/31 10:00 AM  ATL:17  @ CHI:37  (Spread= -2.5)  - Pick=CHI 
+Sean Day             2023/12/31 10:00 AM  ATL:17  @ CHI:37  (Spread= -2.5)  - Pick=CHI 
+Conor Foley          2024/01/07 1:25 PM   CHI:9   @ GB :17  (Spread= -3.5)  - Pick=CHI 
+Tim Lennox           2024/01/07 1:25 PM   CHI:9   @ GB :17  (Spread= -3.5)  - Pick=CHI 
+Brian Cully          2024/01/07 1:25 PM   CHI:9   @ GB :17  (Spread= -3.5)  - Pick=CHI 
+Austin Hargarten     2024/01/07 1:25 PM   CHI:9   @ GB :17  (Spread= -3.5)  - Pick=CHI 
+Stephen Kliff        2024/01/07 1:25 PM   CHI:9   @ GB :17  (Spread= -3.5)  - Pick=CHI 
+Tom Wyrwich          2024/01/07 1:25 PM   CHI:9   @ GB :17  (Spread= -3.5)  - Pick=CHI 
+Sean Day             2024/01/07 1:25 PM   CHI:9   @ GB :17  (Spread= -3.5)  - Pick=CHI 
+Amit Nagar           2024/01/07 1:25 PM   CHI:9   @ GB :17  (Spread= -3.5)  - Pick=CHI
