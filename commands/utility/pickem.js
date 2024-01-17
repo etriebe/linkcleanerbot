@@ -82,7 +82,6 @@ module.exports = {
 						.addChoices(
 							{ name: 'Summary', value: 'Summary' },
 							{ name: 'GameList', value: 'GameList' },
-							{ name: 'Any', value: 'Any' },
 						))
 		),
 	async execute(interaction)
