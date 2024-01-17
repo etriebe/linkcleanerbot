@@ -53,7 +53,38 @@ module.exports = {
 				.addStringOption(option =>
 					option.setName('dayofweek')
 						.setDescription('Day of week get game results for: CSV use full day name')
-						.setRequired(false))),
+						.setRequired(false))
+				.addStringOption(option =>
+					option.setName('querysort')
+						.setDescription('Which column to sort query results by.')
+						.setRequired(false)
+						.addChoices(
+							{ name: 'FullName', value: 'FullName' },
+							{ name: 'GameCount', value: 'GameCount' },
+							{ name: 'PicksWon', value: 'PicksWon' },
+							{ name: 'TotalPoints', value: 'TotalPoints' },
+							{ name: 'PickPercentage', value: 'PickPercentage' },
+							{ name: 'SpreadDifferential', value: 'SpreadDifferential' },
+						))
+				.addStringOption(option =>
+					option.setName('picktype')
+						.setDescription('Whether you want the query to choose games in which you picked for, against, or any pick.')
+						.setRequired(false)
+						.addChoices(
+							{ name: 'For', value: 'For' },
+							{ name: 'Against', value: 'Against' },
+							{ name: 'Any', value: 'Any' },
+						))
+				.addStringOption(option =>
+					option.setName('queryresulttype')
+						.setDescription('Whether you want the query to return a summary of all the picks or a list of all the picks.')
+						.setRequired(false)
+						.addChoices(
+							{ name: 'Summary', value: 'Summary' },
+							{ name: 'GameList', value: 'GameList' },
+							{ name: 'Any', value: 'Any' },
+						))
+		),
 	async execute(interaction)
 	{
 		if (interaction.options.getSubcommand() === 'simulate')
@@ -80,6 +111,9 @@ module.exports = {
 			const person = interaction.options.getString('person');
 			const teams = interaction.options.getString('teams');
 			const dayofweek = interaction.options.getString('dayofweek');
+			const querySort = interaction.options.getString('querysort');
+			const pickType = interaction.options.getString('picktype');
+			const queryResultType = interaction.options.getString('queryresulttype');
 
 			let args = ['--query'];
 			if (minimumSpread)
@@ -107,7 +141,22 @@ module.exports = {
 				args.push('--teams');
 				args.push(`"${teams}"`);
 			}
-			// const result = await RunArbemExecFile(args);
+			if (querySort)
+			{
+				args.push('--querysort');
+				args.push(`${querySort}`);
+			}
+			if (pickType)
+			{
+				args.push('--picktype');
+				args.push(`${pickType}`);
+			}
+			if (queryResultType)
+			{
+				args.push('--queryresulttype');
+				args.push(`${queryResultType}`);
+			}
+
 			await interaction.deferReply();
 			const result = await RunArbem(args);
 			await interaction.editReply(codeBlock(result));
