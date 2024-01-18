@@ -1,6 +1,11 @@
-const { client } = require('discord.js');
-const { guildId } = require('./config.json');
-const guild = client.guilds.cache.get(guildId);
+const { REST, Routes } = require('discord.js');
+const { clientId, guildId, token } = require('./config.prod.json');
 
-// This updates immediately
-guild.commands.set([]);
+const rest = new REST().setToken(token);
+
+// ...
+
+// for guild-based commands
+rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: [] })
+    .then(() => console.log('Successfully deleted all guild commands.'))
+    .catch(console.error);
