@@ -15,9 +15,10 @@ client.once(Events.ClientReady, readyClient =>
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 });
 
-client.on("messageCreate", message =>
+client.on("messageCreate", async message =>
 {
-	FixTwitterLink(message);
+	await FixTwitterLink(message);
+	await FixXLink(message);
 });
 
 try
@@ -31,12 +32,24 @@ try
 
 async function FixTwitterLink(message)
 {
-	let linkMatches = [...message.content.matchAll(/https:\/\/(www\.)?(x|twitter)\.com\/(?<username>.+)\/status\/(?<messageid>\d+)/gm)];
+	let linkMatches = [...message.content.matchAll(/https:\/\/(www\.)?twitter\.com\/(?<username>.+)\/status\/(?<messageid>\d+)/gm)];
 
 	for (let i = 0; i < linkMatches.length; i++)
 	{
 		const currentLinkMatch = linkMatches[i];
 		const newLinkMessage = `https://fxtwitter.com/${currentLinkMatch.groups.username}/status/${currentLinkMatch.groups.messageid}`;
+		await message.channel.send(newLinkMessage);
+	}
+}
+
+async function FixXLink(message)
+{
+	let linkMatches = [...message.content.matchAll(/https:\/\/(www\.)?x\.com\/(?<username>.+)\/status\/(?<messageid>\d+)/gm)];
+
+	for (let i = 0; i < linkMatches.length; i++)
+	{
+		const currentLinkMatch = linkMatches[i];
+		const newLinkMessage = `https://fixupx.com/${currentLinkMatch.groups.username}/status/${currentLinkMatch.groups.messageid}`;
 		await message.channel.send(newLinkMessage);
 	}
 }
