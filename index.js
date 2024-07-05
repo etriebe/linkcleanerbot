@@ -44,13 +44,13 @@ async function FixAllLinkTypes(message)
 		// let newLinkMessage = `Sent by <@${message.userId}>`;
 		let newLinkMessage = ``;
 		const fullLinkMatch = currentLinkMatch[0];
-		if (fullLinkMatch.includes("twitter.com") && !fullLinkMatch.includes("fxtwitter.com"))
+		if (fullLinkMatch.includes("twitter.com") && !fullLinkMatch.includes("vxtwitter.com"))
 		{
-			newLinkMessage = currentLinkMatch[0].replace("twitter.com", "fxtwitter.com");
+			newLinkMessage = currentLinkMatch[0].replace("twitter.com", "vxtwitter.com");
 		}
-		if ((fullLinkMatch.includes("https://x.com") || fullLinkMatch.includes("https://www.x.com")) && !fullLinkMatch.includes("fixupx.com"))
+		if ((fullLinkMatch.includes("https://x.com") || fullLinkMatch.includes("https://www.x.com")) && !fullLinkMatch.includes("fixvx.com"))
 		{
-			newLinkMessage = currentLinkMatch[0].replace("x.com", "fixupx.com");
+			newLinkMessage = currentLinkMatch[0].replace("x.com", "fixvx.com");
 		}
 		if (fullLinkMatch.includes("tiktok.com") && !fullLinkMatch.includes("vxtiktok.com"))
 		{
