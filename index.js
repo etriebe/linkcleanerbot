@@ -19,6 +19,7 @@ client.on("messageCreate", async message =>
 {
 	await FixTwitterLink(message);
 	await FixXLink(message);
+	await FixTikTokLink(message);
 });
 
 try
@@ -50,6 +51,18 @@ async function FixXLink(message)
 	{
 		const currentLinkMatch = linkMatches[i];
 		const newLinkMessage = `https://fixupx.com/${currentLinkMatch.groups.username}/status/${currentLinkMatch.groups.messageid}`;
+		await message.channel.send(newLinkMessage);
+	}
+}
+
+async function FixTikTokLink(message)
+{
+	let linkMatches = [...message.content.matchAll(/https:\/\/(www\.)?twitter\.com\/t\/(?<messageid>.+)/gm)];
+
+	for (let i = 0; i < linkMatches.length; i++)
+	{
+		const currentLinkMatch = linkMatches[i];
+		const newLinkMessage = `https://www.vxtiktok.com/t/${currentLinkMatch.groups.messageid}`;
 		await message.channel.send(newLinkMessage);
 	}
 }
