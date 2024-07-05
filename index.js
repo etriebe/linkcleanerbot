@@ -17,10 +17,6 @@ client.once(Events.ClientReady, readyClient =>
 
 client.on("messageCreate", async message =>
 {
-	// await FixTwitterLink(message);
-	// await FixXLink(message);
-	// await FixTikTokLink(message);
-	// await FixReddit(message);
 	await FixAllLinkTypes(message);
 });
 
