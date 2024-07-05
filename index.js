@@ -52,9 +52,9 @@ async function FixAllLinkTypes(message)
 		{
 			newLinkMessage = currentLinkMatch[0].replace("tiktok.com", "vxtiktok.com");
 		}
-		if (fullLinkMatch.includes("reddit.com"))
+		if (fullLinkMatch.includes("reddit.com") && !fullLinkMatch.includes("vxreddit.com"))
 		{
-			newLinkMessage = currentLinkMatch[0].replace("reddit.com", "rxddit.com");
+			newLinkMessage = currentLinkMatch[0].replace("reddit.com", "vxreddit.com");
 		}
 
 		if (newLinkMessage == "")
