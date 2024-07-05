@@ -17,9 +17,11 @@ client.once(Events.ClientReady, readyClient =>
 
 client.on("messageCreate", async message =>
 {
-	await FixTwitterLink(message);
-	await FixXLink(message);
-	await FixTikTokLink(message);
+	// await FixTwitterLink(message);
+	// await FixXLink(message);
+	// await FixTikTokLink(message);
+	// await FixReddit(message);
+	await FixAllLinkTypes(message);
 });
 
 try
@@ -31,38 +33,39 @@ try
 	console.log('Error:', e.stack);
 }
 
-async function FixTwitterLink(message)
+
+async function FixAllLinkTypes(message)
 {
-	let linkMatches = [...message.content.matchAll(/https:\/\/(www\.)?twitter\.com\/(?<username>.+)\/status\/(?<messageid>\d+)/gm)];
+	let linkMatches = [...message.content.matchAll(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm)];
 
 	for (let i = 0; i < linkMatches.length; i++)
 	{
 		const currentLinkMatch = linkMatches[i];
-		const newLinkMessage = `https://fxtwitter.com/${currentLinkMatch.groups.username}/status/${currentLinkMatch.groups.messageid}`;
-		await message.channel.send(newLinkMessage);
-	}
-}
+		// let newLinkMessage = `Sent by <@${message.userId}>`;
+		let newLinkMessage = ``;
+		const fullLinkMatch = currentLinkMatch[0];
+		if (fullLinkMatch.includes("twitter.com") && !fullLinkMatch.includes("fxtwitter.com"))
+		{
+			newLinkMessage = currentLinkMatch[0].replace("twitter.com", "fxtwitter.com");
+		}
+		if ((fullLinkMatch.includes("https://x.com") || fullLinkMatch.includes("https://www.x.com")) && !fullLinkMatch.includes("fixupx.com"))
+		{
+			newLinkMessage = currentLinkMatch[0].replace("x.com", "fixupx.com");
+		}
+		if (fullLinkMatch.includes("tiktok.com") && !fullLinkMatch.includes("vxtiktok.com"))
+		{
+			newLinkMessage = currentLinkMatch[0].replace("tiktok.com", "vxtiktok.com");
+		}
+		if (fullLinkMatch.includes("reddit.com"))
+		{
+			newLinkMessage = currentLinkMatch[0].replace("reddit.com", "rxddit.com");
+		}
 
-async function FixXLink(message)
-{
-	let linkMatches = [...message.content.matchAll(/https:\/\/(www\.)?x\.com\/(?<username>.+)\/status\/(?<messageid>\d+)/gm)];
+		if (newLinkMessage == "")
+		{
+			continue;
+		}
 
-	for (let i = 0; i < linkMatches.length; i++)
-	{
-		const currentLinkMatch = linkMatches[i];
-		const newLinkMessage = `https://fixupx.com/${currentLinkMatch.groups.username}/status/${currentLinkMatch.groups.messageid}`;
-		await message.channel.send(newLinkMessage);
-	}
-}
-
-async function FixTikTokLink(message)
-{
-	let linkMatches = [...message.content.matchAll(/https:\/\/(www\.)?twitter\.com\/t\/(?<messageid>.+)/gm)];
-
-	for (let i = 0; i < linkMatches.length; i++)
-	{
-		const currentLinkMatch = linkMatches[i];
-		const newLinkMessage = `https://www.vxtiktok.com/t/${currentLinkMatch.groups.messageid}`;
-		await message.channel.send(newLinkMessage);
+		await message.channel.send(`${newLinkMessage}`);
 	}
 }
