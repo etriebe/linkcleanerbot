@@ -19,16 +19,16 @@ client.on("messageCreate", async message => {
 	await FixAllLinkTypes(message);
 });
 
-client.on('interactionCreate', async interaction => {
-	if (!interaction.isButton()) return;
+// client.on('interactionCreate', async interaction => {
+// 	if (!interaction.isButton()) return;
 
-	if (interaction.customId === 'yes') {
-		await interaction.message.delete();
-		await interaction.reply({ content: 'Message deleted!', ephemeral: true });
-	} else if (interaction.customId === 'no') {
-		await interaction.reply({ content: 'Message not deleted.', ephemeral: true });
-	}
-});
+// 	if (interaction.customId === 'yes') {
+// 		await interaction.message.delete();
+// 		// await interaction.reply({ content: 'Message deleted!', ephemeral: true });
+// 	} else if (interaction.customId === 'no') {
+// 		await interaction.message.delete();
+// 	}
+// });
 
 try {
 	console.log();
@@ -80,7 +80,7 @@ async function FixAllLinkTypes(message) {
 					.setStyle(ButtonStyle.Secondary)
 			);
 
-		await message.reply({ content: 'Do you want to delete your message?', components: [row] });
+		let interaction = await message.reply({ content: 'Do you want to delete your message?', components: [row] , ephemeral: true});
 
 		const filter = i => i.customId === 'yes' || i.customId === 'no';
 		const collector = message.channel.createMessageComponentCollector({ filter, time: 15000 });
@@ -92,11 +92,13 @@ async function FixAllLinkTypes(message) {
 			} else if (i.customId === 'no') {
 				await i.reply({ content: 'Message not deleted.', ephemeral: true });
 			}
+			interaction.delete();
 			collector.stop();
 		});
 
 		collector.on('end', collected => {
-			if (collected.size === 0) {
+			if (collected.size === 0) {			
+				interaction.delete();
 				message.reply({ content: 'No response received. Message not deleted.', ephemeral: true });
 			}
 		});
