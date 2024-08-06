@@ -67,7 +67,7 @@ async function FixAllLinkTypes(message) {
 			continue;
 		}
 
-		await message.channel.send(`${newLinkMessage}`);
+		await message.channel.send(`From ${message.author}\n\n${newLinkMessage}`);
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
