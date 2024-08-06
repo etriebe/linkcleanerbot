@@ -38,6 +38,15 @@ systemctl enable linkcleanerbot.service
 
 # Start the service
 
+# Run an update 
+
+git pull
+systemctl restart linkcleanerbot.service
+
+systemctl stop linkcleanerbot.service
+
+# Start the service
+
 systemctl start linkcleanerbot.service
 systemctl restart linkcleanerbot.service
 systemctl status linkcleanerbot.service
