@@ -4,58 +4,35 @@ const client = new Client({
 	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers],
 	partials: [Partials.Channel, Partials.Message]
 });
+
+const ConfigUtils = require('./lib/ConfigUtils.js'); // this is the relative path to the file
 const { token } = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
 const dataFolder = "./data";
-let guildConfigs = {};
 
-function getGuildConfigFilePath(guildId)
-{
-	const guildFilePathFormat = `${dataFolder}/##GUILDID##.json`;
-	return guildFilePathFormat.replace('##GUILDID##', guildId);
-}
+client.commands = new Collection();
 
-function getGuildConfig(guildId)
-{
-	const guildConfigFromCache = guildConfigs[guildId];
-	if (guildConfigFromCache)
-	{
-		console.log(`Found cached guild config for guild id ${guildId}`);
-		return guildConfigFromCache;
-	}
-	const guildConfigFile = getGuildConfigFilePath(guildId);
-	if (fs.existsSync(guildConfigFile))
-	{
-		console.log(`Found guild config on disk for guild id ${guildId}`);
-		return JSON.parse(fs.readFileSync(guildConfigFile));
-	}
-	else
-	{
-		console.log(`Creating empty guild config for guild id ${guildId}`);
-		return [];
-	}
-}
+const foldersPath = path.join(__dirname, 'commands');
+const commandFolders = fs.readdirSync(foldersPath);
 
-function saveGuildConfig(guildConfig, guildId)
+for (const folder of commandFolders)
 {
-	cacheGuildConfig(guildConfig, guildId);
-	try
+	const commandsPath = path.join(foldersPath, folder);
+	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+	for (const file of commandFiles)
 	{
-		const configFilePath = getGuildConfigFilePath(guildId);
-		console.log(`Writing file for guildId: ${configFilePath}`);
-		fs.writeFileSync(configFilePath, JSON.stringify(guildConfig));
+		const filePath = path.join(commandsPath, file);
+		const command = require(filePath);
+		// Set a new item in the Collection with the key as the command name and the value as the exported module
+		if ('data' in command && 'execute' in command)
+		{
+			client.commands.set(command.data.name, command);
+		} else
+		{
+			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+		}
 	}
-	catch (e)
-	{
-		console.log(`Error: ${e}`);
-	}
-	return;
-}
-
-function cacheGuildConfig(guildConfig, guildId)
-{
-	guildConfigs[guildId] = guildConfig;
 }
 
 // When the client is ready, run this code (only once).
@@ -74,7 +51,7 @@ client.once(Events.ClientReady, readyClient =>
 
 client.on("messageCreate", async message =>
 {
-	let guildConfig = getGuildConfig(message.guildId);
+	let guildConfig = ConfigUtils.getGuildConfig(message.guildId);
 	let authorSettings = guildConfig.find(c => c.authorId == message.author.id);
 	if (authorSettings && authorSettings.cleanSetting == "never")
 	{
@@ -84,16 +61,32 @@ client.on("messageCreate", async message =>
 	await FixAllLinkTypes(message, authorSettings);
 });
 
-// client.on('interactionCreate', async interaction => {
-// 	if (!interaction.isButton()) return;
+client.on(Events.InteractionCreate, async interaction =>
+{
+	if (!interaction.isChatInputCommand()) return;
+	const command = interaction.client.commands.get(interaction.commandName);
 
-// 	if (interaction.customId === 'yes') {
-// 		await interaction.message.delete();
-// 		// await interaction.reply({ content: 'Message deleted!', ephemeral: true });
-// 	} else if (interaction.customId === 'no') {
-// 		await interaction.message.delete();
-// 	}
-// });
+	if (!command)
+	{
+		console.error(`No command matching ${interaction.commandName} was found.`);
+		return;
+	}
+
+	try
+	{
+		await command.execute(interaction);
+	} catch (error)
+	{
+		console.error(error);
+		if (interaction.replied || interaction.deferred)
+		{
+			await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+		} else
+		{
+			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		}
+	}
+});
 
 try
 {
@@ -184,12 +177,12 @@ async function FixAllLinkTypes(message, authorSettings)
 			{
 				await message.delete();
 				await i.reply({ content: 'Messages will always be deleted.', ephemeral: true });
-				let guildConfig = getGuildConfig(message.guildId);
+				let guildConfig = ConfigUtils.getGuildConfig(message.guildId);
 				guildConfig.push({
 					authorId: message.author.id,
 					cleanSetting: "always"
 				});
-				saveGuildConfig(guildConfig, message.guildId);
+				ConfigUtils.saveGuildConfig(guildConfig, message.guildId);
 			}
 			else if (i.customId === 'no')
 			{
@@ -198,12 +191,12 @@ async function FixAllLinkTypes(message, authorSettings)
 			else if (i.customId === 'never')
 			{
 				await i.reply({ content: 'Message will never be deleted.', ephemeral: true });
-				let guildConfig = getGuildConfig(message.guildId);
+				let guildConfig = ConfigUtils.getGuildConfig(message.guildId);
 				guildConfig.push({
 					authorId: message.author.id,
 					cleanSetting: "never"
 				});
-				saveGuildConfig(guildConfig, message.guildId);
+				ConfigUtils.saveGuildConfig(guildConfig, message.guildId);
 			}
 			interaction.delete();
 			collector.stop();
