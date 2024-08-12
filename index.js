@@ -5,7 +5,7 @@ const client = new Client({
 	partials: [Partials.Channel, Partials.Message]
 });
 
-const ConfigUtils = require('./lib/ConfigUtils.js'); // this is the relative path to the file
+const ConfigUtils = require('./lib/ConfigUtils.js');
 const { token } = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
