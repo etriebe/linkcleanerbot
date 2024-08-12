@@ -2,6 +2,8 @@
 
 Discord bot which will automatically send a message with a fixed up link for twitter/x/reddit/tiktok with the corresponding embed-friendly link. I'll keep these up to date/switch as needed.
 
+![alt text](images/prompt.png)
+
 ## Top.GG link
 
 https://top.gg/bot/1197601555512316064
