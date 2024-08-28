@@ -7,7 +7,7 @@ const ConfigUtils = require('../../lib/ConfigUtils.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('reset')
+        .setName('linkreset')
         .setDescription('Resets Link Cleaner Bot always/never sticky setting.'),
     async execute(interaction)
     {
