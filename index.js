@@ -116,14 +116,14 @@ async function FixAllLinkTypes(message, authorSettings)
 		{
 			newLinkMessage = currentLinkMatch[0].replace("x.com", "fixvx.com");
 		}
-		if (fullLinkMatch.includes("tiktok.com") && !fullLinkMatch.includes("tnktok.com"))
-		{
-			newLinkMessage = currentLinkMatch[0].replace("tiktok.com", "tnktok.com");
-		}
-		// if (fullLinkMatch.includes("tiktok.com") && !fullLinkMatch.includes("vxtiktok.com"))
+		// if (fullLinkMatch.includes("tiktok.com") && !fullLinkMatch.includes("tnktok.com"))
 		// {
-		// 	newLinkMessage = currentLinkMatch[0].replace("tiktok.com", "vxtiktok.com");
+		// 	newLinkMessage = currentLinkMatch[0].replace("tiktok.com", "tnktok.com");
 		// }
+		if (fullLinkMatch.includes("tiktok.com") && !fullLinkMatch.includes("vxtiktok.com"))
+		{
+			newLinkMessage = currentLinkMatch[0].replace("tiktok.com", "vxtiktok.com");
+		}
 		if (fullLinkMatch.includes("reddit.com") && !fullLinkMatch.includes("vxreddit.com"))
 		{
 			newLinkMessage = currentLinkMatch[0].replace("reddit.com", "vxreddit.com");
