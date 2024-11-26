@@ -134,7 +134,9 @@ async function FixAllLinkTypes(message, authorSettings)
 			continue;
 		}
 
-		await message.channel.send(`From ${message.author}\n\n${newLinkMessage}`);
+		const fullMessage = message.content.replace(currentLinkMatch[0], newLinkMessage);
+
+		await message.channel.send(`From ${message.author}\n\n"${fullMessage}"`);
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
