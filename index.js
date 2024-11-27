@@ -128,6 +128,16 @@ async function FixAllLinkTypes(message, authorSettings)
 		{
 			newLinkMessage = currentLinkMatch[0].replace("reddit.com", "vxreddit.com");
 		}
+		if (fullLinkMatch.includes("bsky.app") && !fullLinkMatch.includes("vxbsky.app"))
+		{
+			newLinkMessage = currentLinkMatch[0].replace("bsky.app", "vxbsky.app");
+		}
+		if (fullLinkMatch.includes("instagram.com") && !fullLinkMatch.includes("ddinstagram.com"))
+		{
+			newLinkMessage = currentLinkMatch[0].replace("instagram.com", "ddinstagram.com");
+		}
+
+		newLinkMessage = `${newLinkMessage} | *${currentLinkMatch[0]}*`
 
 		if (newLinkMessage == "")
 		{
@@ -136,7 +146,15 @@ async function FixAllLinkTypes(message, authorSettings)
 
 		const fullMessage = message.content.replace(currentLinkMatch[0], newLinkMessage);
 
-		await message.channel.send(`From ${message.author}\n\n"${fullMessage}"`);
+		const azarIsms = [
+			`What I *think* ${message.author} is trying to say is...`,
+			`That's true, ${message.author}, but what about...`,
+		];
+
+		const randomIndex = Math.floor(Math.random() * azarIsms.length);
+		const randomMessage = azarIsms[randomIndex];
+
+		await message.channel.send(`${randomMessage}}\n\n${fullMessage}`);
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
