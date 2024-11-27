@@ -100,44 +100,45 @@ try
 
 async function FixAllLinkTypes(message, authorSettings)
 {
+
+	const botAuthorIds = [
+		"1197601555512316064",
+		"1197604264881705140"
+	];
+
+	if (botAuthorIds.includes(message.author.id))
+	{
+		// Skip messages from our list of bots
+		return;
+	}
+
 	let linkMatches = [...message.content.matchAll(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm)];
+	const domainMapping = [
+		["twitter.com", "vxtwitter.com"],
+		["x.com", "fixvx.com"],
+		["tiktok.com", "vxtiktok.com"],
+		["reddit.com", "vxreddit.com"],
+		["bsky.app", "vxbsky.app"],
+		["instagram.com", "ddinstagram.com"],
+	];
 
 	for (let i = 0; i < linkMatches.length; i++)
 	{
 		const currentLinkMatch = linkMatches[i];
-		// let newLinkMessage = `Sent by <@${message.userId}>`;
 		let newLinkMessage = ``;
 		const fullLinkMatch = currentLinkMatch[0];
-		if (fullLinkMatch.includes("twitter.com") && !fullLinkMatch.includes("vxtwitter.com"))
-		{
-			newLinkMessage = currentLinkMatch[0].replace("twitter.com", "vxtwitter.com");
-		}
-		if ((fullLinkMatch.includes("https://x.com") || fullLinkMatch.includes("https://www.x.com")) && !fullLinkMatch.includes("fixvx.com"))
-		{
-			newLinkMessage = currentLinkMatch[0].replace("x.com", "fixvx.com");
-		}
-		// if (fullLinkMatch.includes("tiktok.com") && !fullLinkMatch.includes("tnktok.com"))
-		// {
-		// 	newLinkMessage = currentLinkMatch[0].replace("tiktok.com", "tnktok.com");
-		// }
-		if (fullLinkMatch.includes("tiktok.com") && !fullLinkMatch.includes("vxtiktok.com"))
-		{
-			newLinkMessage = currentLinkMatch[0].replace("tiktok.com", "vxtiktok.com");
-		}
-		if (fullLinkMatch.includes("reddit.com") && !fullLinkMatch.includes("vxreddit.com"))
-		{
-			newLinkMessage = currentLinkMatch[0].replace("reddit.com", "vxreddit.com");
-		}
-		if (fullLinkMatch.includes("bsky.app") && !fullLinkMatch.includes("vxbsky.app"))
-		{
-			newLinkMessage = currentLinkMatch[0].replace("bsky.app", "vxbsky.app");
-		}
-		if (fullLinkMatch.includes("instagram.com") && !fullLinkMatch.includes("ddinstagram.com"))
-		{
-			newLinkMessage = currentLinkMatch[0].replace("instagram.com", "ddinstagram.com");
-		}
 
-		newLinkMessage = `${newLinkMessage} | *${currentLinkMatch[0]}*`
+		for (const domainMap of domainMapping)
+		{
+			const normalDomain = domainMap[0];
+			const fixedDomain = domainMap[1];
+
+			if (fullLinkMatch.includes(normalDomain) && !fullLinkMatch.includes(fixedDomain))
+			{
+				newLinkMessage = currentLinkMatch[0].replace(normalDomain, fixedDomain);
+				newLinkMessage = `${newLinkMessage} | <${currentLinkMatch[0]}>`;
+			}
+		}
 
 		if (newLinkMessage == "")
 		{
@@ -148,13 +149,13 @@ async function FixAllLinkTypes(message, authorSettings)
 
 		const azarIsms = [
 			`What I *think* ${message.author} is trying to say is...`,
-			`That's true, ${message.author}, but what about...`,
+			`🤔 Interesting, ${message.author}, but what about...`,
 		];
 
 		const randomIndex = Math.floor(Math.random() * azarIsms.length);
 		const randomMessage = azarIsms[randomIndex];
 
-		await message.channel.send(`${randomMessage}}\n\n${fullMessage}`);
+		await message.channel.send(`${randomMessage}\n\n${fullMessage}`);
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
