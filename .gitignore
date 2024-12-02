@@ -136,3 +136,4 @@ dist
 data/*.json
 startbot.bat
 config.prod.json
+azar-bot-config.json
