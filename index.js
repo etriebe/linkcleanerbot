@@ -147,15 +147,16 @@ async function FixAllLinkTypes(message, authorSettings)
 
 		const fullMessage = message.content.replace(currentLinkMatch[0], newLinkMessage);
 
-		const azarIsms = [
-			`What I *think* ${message.author} is trying to say is...`,
-			`🤔 Interesting, ${message.author}, but what about...`,
-		];
 
-		const randomIndex = Math.floor(Math.random() * azarIsms.length);
-		const randomMessage = azarIsms[randomIndex];
+		// const azarIsms = [
+		// 	`What I *think* ${message.author} is trying to say is...`,
+		// 	`🤔 Interesting, ${message.author}, but what about...`,
+		// ];
 
-		await message.channel.send(`${randomMessage}\n\n${fullMessage}`);
+		// const randomIndex = Math.floor(Math.random() * azarIsms.length);
+		// const randomMessage = azarIsms[randomIndex];
+
+		await message.channel.send(`From ${message.author}:\n\n${fullMessage}`);
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
