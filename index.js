@@ -116,10 +116,8 @@ async function FixAllLinkTypes(message, authorSettings)
 	const domainMapping = [
 		["twitter.com", "vxtwitter.com"],
 		["x.com", "fixvx.com"],
-		["tiktok.com", "vxtiktok.com"],
 		["reddit.com", "vxreddit.com"],
 		["bsky.app", "vxbsky.app"],
-		["instagram.com", "ddinstagram.com"],
 	];
 
 	for (let i = 0; i < linkMatches.length; i++)
