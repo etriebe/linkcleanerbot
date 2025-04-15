@@ -100,7 +100,6 @@ try
 
 async function FixAllLinkTypes(message, authorSettings)
 {
-
 	const botAuthorIds = [
 		"1197601555512316064",
 		"1197604264881705140"
@@ -109,6 +108,12 @@ async function FixAllLinkTypes(message, authorSettings)
 	if (botAuthorIds.includes(message.author.id))
 	{
 		// Skip messages from our list of bots
+		return;
+	}
+
+	if (message.content.match(/badbot/gm))
+	{
+		// skip if you get told you're a bad bot
 		return;
 	}
 
