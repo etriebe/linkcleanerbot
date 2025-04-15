@@ -44,7 +44,8 @@ systemctl enable linkcleanerbot.service
 
 cd /home/triebe/azarbot/
 git pull
-cd cd /home/triebe/linkcleanerbot/
+cd /home/triebe/linkcleanerbot/
+git pull
 systemctl restart linkcleanerbot.service
 systemctl restart azarbot.service
 
