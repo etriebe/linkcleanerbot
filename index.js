@@ -123,6 +123,7 @@ async function FixAllLinkTypes(message, authorSettings)
 		["x.com", "fixvx.com"],
 		["reddit.com", "vxreddit.com"],
 		["bsky.app", "vxbsky.app"],
+		["instagram.com", "instagramez.com"],
 	];
 
 	for (let i = 0; i < linkMatches.length; i++)
