@@ -122,7 +122,6 @@ async function FixAllLinkTypes(message, authorSettings)
 		["twitter.com", "vxtwitter.com"],
 		["x.com", "fixvx.com"],
 		["reddit.com", "vxreddit.com"],
-		["bsky.app", "vxbsky.app"],
 		["instagram.com", "instagramez.com"],
 	];
 
