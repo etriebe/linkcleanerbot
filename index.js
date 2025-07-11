@@ -120,7 +120,7 @@ async function FixAllLinkTypes(message, authorSettings)
 	let linkMatches = [...message.content.matchAll(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm)];
 	const domainMapping = [
 		["twitter.com", "vxtwitter.com"],
-		["tiktok.com", "vxtiktok.com"],
+		["tiktok.com", "kktiktok.com"],
 		["x.com", "fixvx.com"],
 		["reddit.com", "vxreddit.com"],
 		["instagram.com", "instagramez.com"],
