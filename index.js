@@ -100,7 +100,6 @@ try
 
 async function FixAllLinkTypes(message, authorSettings)
 {
-
 	const botAuthorIds = [
 		"1197601555512316064",
 		"1197604264881705140"
@@ -112,14 +111,19 @@ async function FixAllLinkTypes(message, authorSettings)
 		return;
 	}
 
+	if (message.content.match(/badbot/gm))
+	{
+		// skip if you get told you're a bad bot
+		return;
+	}
+
 	let linkMatches = [...message.content.matchAll(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm)];
 	const domainMapping = [
 		["twitter.com", "vxtwitter.com"],
+		["tiktok.com", "kktiktok.com"],
 		["x.com", "fixvx.com"],
-		["tiktok.com", "vxtiktok.com"],
 		["reddit.com", "vxreddit.com"],
-		["bsky.app", "vxbsky.app"],
-		["instagram.com", "ddinstagram.com"],
+		["instagram.com", "vxinstagram.com"],
 	];
 
 	for (let i = 0; i < linkMatches.length; i++)
@@ -147,15 +151,16 @@ async function FixAllLinkTypes(message, authorSettings)
 
 		const fullMessage = message.content.replace(currentLinkMatch[0], newLinkMessage);
 
-		const azarIsms = [
-			`What I *think* ${message.author} is trying to say is...`,
-			`🤔 Interesting, ${message.author}, but what about...`,
-		];
 
-		const randomIndex = Math.floor(Math.random() * azarIsms.length);
-		const randomMessage = azarIsms[randomIndex];
+		// const azarIsms = [
+		// 	`What I *think* ${message.author} is trying to say is...`,
+		// 	`🤔 Interesting, ${message.author}, but what about...`,
+		// ];
 
-		await message.channel.send(`${randomMessage}\n\n${fullMessage}`);
+		// const randomIndex = Math.floor(Math.random() * azarIsms.length);
+		// const randomMessage = azarIsms[randomIndex];
+
+		await message.channel.send(`From ${message.author}:\n\n${fullMessage}`);
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
