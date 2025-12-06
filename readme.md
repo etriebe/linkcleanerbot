@@ -61,3 +61,6 @@ journalctl -u linkcleanerbot.service
 
 systemctl daemon-reload
 systemctl restart linkcleanerbot.service
+
+
+systemctl restart azarbot.service
