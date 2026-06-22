@@ -16,20 +16,16 @@ client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
-for (const folder of commandFolders)
-{
+for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-	for (const file of commandFiles)
-	{
+	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
 		const command = require(filePath);
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
-		if ('data' in command && 'execute' in command)
-		{
+		if ('data' in command && 'execute' in command) {
 			client.commands.set(command.data.name, command);
-		} else
-		{
+		} else {
 			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 		}
 	}
@@ -38,81 +34,66 @@ for (const folder of commandFolders)
 // When the client is ready, run this code (only once).
 // The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
 // It makes some properties non-nullable.
-client.once(Events.ClientReady, readyClient =>
-{
+client.once(Events.ClientReady, readyClient => {
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 
-	if (!fs.existsSync(dataFolder))
-	{
+	if (!fs.existsSync(dataFolder)) {
 		console.log(`Creating data folder: ${dataFolder}`);
 		fs.mkdirSync(dataFolder);
 	}
 });
 
-client.on("messageCreate", async message =>
-{
+client.on("messageCreate", async message => {
 	let guildConfig = ConfigUtils.getGuildConfig(message.guildId);
 	let authorSettings = guildConfig.find(c => c.authorId == message.author.id);
-	if (authorSettings && authorSettings.cleanSetting == "never")
-	{
+	if (authorSettings && authorSettings.cleanSetting == "never") {
 		console.log(`Clean setting for author: ${authorSettings.cleanSetting}`);
 		return;
 	}
 	await FixAllLinkTypes(message, authorSettings);
 });
 
-client.on(Events.InteractionCreate, async interaction =>
-{
+client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
 	const command = interaction.client.commands.get(interaction.commandName);
 
-	if (!command)
-	{
+	if (!command) {
 		console.error(`No command matching ${interaction.commandName} was found.`);
 		return;
 	}
 
-	try
-	{
+	try {
 		await command.execute(interaction);
-	} catch (error)
-	{
+	} catch (error) {
 		console.error(error);
-		if (interaction.replied || interaction.deferred)
-		{
+		if (interaction.replied || interaction.deferred) {
 			await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-		} else
-		{
+		} else {
 			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 		}
 	}
 });
 
-try
-{
+try {
 	console.log();
 	client.login(token);
-} catch (e)
-{
+} catch (e) {
 	console.log('Error:', e.stack);
 }
 
 
-async function FixAllLinkTypes(message, authorSettings)
-{
+async function FixAllLinkTypes(message, authorSettings) {
 	const botAuthorIds = [
 		"1197601555512316064",
 		"1197604264881705140"
 	];
 
-	if (botAuthorIds.includes(message.author.id))
-	{
+	if (botAuthorIds.includes(message.author.id)) {
 		// Skip messages from our list of bots
 		return;
 	}
 
-	if (message.content.match(/badbot/gm))
-	{
+	if (message.content.match(/badbot/gm)) {
 		// skip if you get told you're a bad bot
 		return;
 	}
@@ -126,26 +107,22 @@ async function FixAllLinkTypes(message, authorSettings)
 		["instagram.com", "vxinstagram.com"],
 	];
 
-	for (let i = 0; i < linkMatches.length; i++)
-	{
+	for (let i = 0; i < linkMatches.length; i++) {
 		const currentLinkMatch = linkMatches[i];
 		let newLinkMessage = ``;
 		const fullLinkMatch = currentLinkMatch[0];
 
-		for (const domainMap of domainMapping)
-		{
+		for (const domainMap of domainMapping) {
 			const normalDomain = domainMap[0];
 			const fixedDomain = domainMap[1];
 
-			if (fullLinkMatch.includes(normalDomain) && !fullLinkMatch.includes(fixedDomain))
-			{
+			if (fullLinkMatch.includes(normalDomain) && !fullLinkMatch.includes(fixedDomain)) {
 				newLinkMessage = currentLinkMatch[0].replace(normalDomain, fixedDomain);
 				newLinkMessage = `${newLinkMessage} | <${currentLinkMatch[0]}>`;
 			}
 		}
 
-		if (newLinkMessage == "")
-		{
+		if (newLinkMessage == "") {
 			continue;
 		}
 
@@ -159,8 +136,14 @@ async function FixAllLinkTypes(message, authorSettings)
 
 		// const randomIndex = Math.floor(Math.random() * azarIsms.length);
 		// const randomMessage = azarIsms[randomIndex];
-
-		await message.channel.send(`From ${message.author}:\n\n${fullMessage}`);
+		if (message.reference) {
+			const originalMessage = await message.channel.messages.fetch(message.reference.messageId);
+			await originalMessage.reply({ content: `Testing ${message.author}:\n\n${fullMessage}`, ephemeral: false });
+		}
+		else {
+			// await message.channel.reply(`From ${message.author}:\n\n${fullMessage}`);
+			await message.channel.send({content: `From ${message.author}:\n\n${fullMessage}`});
+		}
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
@@ -181,8 +164,7 @@ async function FixAllLinkTypes(message, authorSettings)
 					.setStyle(ButtonStyle.Primary)
 			);
 
-		if (authorSettings && authorSettings.cleanSetting == "always")
-		{
+		if (authorSettings && authorSettings.cleanSetting == "always") {
 			await message.delete();
 			return;
 		}
@@ -192,15 +174,12 @@ async function FixAllLinkTypes(message, authorSettings)
 		const filter = i => i.customId === 'yes' || i.customId === 'no' || i.customId === "always" || i.customId === "never";
 		const collector = message.channel.createMessageComponentCollector({ filter, time: 15000 });
 
-		collector.on('collect', async i =>
-		{
-			if (i.customId === 'yes')
-			{
+		collector.on('collect', async i => {
+			if (i.customId === 'yes') {
 				await message.delete();
 				await i.reply({ content: 'Message deleted!', ephemeral: true });
 			}
-			else if (i.customId === 'always')
-			{
+			else if (i.customId === 'always') {
 				await message.delete();
 				await i.reply({ content: 'Messages will always be deleted.', ephemeral: true });
 				let guildConfig = ConfigUtils.getGuildConfig(message.guildId);
@@ -210,12 +189,10 @@ async function FixAllLinkTypes(message, authorSettings)
 				});
 				ConfigUtils.saveGuildConfig(guildConfig, message.guildId);
 			}
-			else if (i.customId === 'no')
-			{
+			else if (i.customId === 'no') {
 				await i.reply({ content: 'Message not deleted.', ephemeral: true });
 			}
-			else if (i.customId === 'never')
-			{
+			else if (i.customId === 'never') {
 				await i.reply({ content: 'Message will never be deleted.', ephemeral: true });
 				let guildConfig = ConfigUtils.getGuildConfig(message.guildId);
 				guildConfig.push({
@@ -228,10 +205,8 @@ async function FixAllLinkTypes(message, authorSettings)
 			collector.stop();
 		});
 
-		collector.on('end', collected =>
-		{
-			if (collected.size === 0)
-			{
+		collector.on('end', collected => {
+			if (collected.size === 0) {
 				interaction.delete();
 				// message.reply({ content: 'No response received. Message not deleted.', ephemeral: true });
 			}

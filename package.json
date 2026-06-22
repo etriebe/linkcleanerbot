@@ -1,12 +1,6 @@
 {
   "dependencies": {
-    "discord.js": "^14.14.1",
-    "module": "^1.2.5",
-    "nodemon": "^3.1.4",
-    "sequelize": "^6.35.1",
-    "sqlite3": "^5.1.6"
-  },
-  "devDependencies": {
-    "eslint": "^8.56.0"
+    "discord.js": "^14.26.4",
+    "nodemon": "^3.1.14"
   }
 }

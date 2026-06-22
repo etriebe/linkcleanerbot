@@ -1,5 +1,6 @@
 # Config secrets file
 config.json
+config.*.json
 
 # Logs
 logs
