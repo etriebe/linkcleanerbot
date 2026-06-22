@@ -4,6 +4,8 @@ Discord bot which will automatically send a message with a fixed up link for twi
 
 ![alt text](images/prompt.png)
 
+![The bot replacing a twitter/x.com link with a fixvx.com link](images/b75952646721bd55f5f1404c1c6a7193a0a95c0c166ba526989a803936f87c71.png)
+
 ## Top.GG link
 
 https://top.gg/bot/1197601555512316064
