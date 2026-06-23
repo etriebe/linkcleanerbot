@@ -98,7 +98,7 @@ async function FixAllLinkTypes(message, authorSettings) {
 		return;
 	}
 
-	let linkMatches = [...message.content.matchAll(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm)];
+	let linkMatches = [...message.content.matchAll(/\bhttps?:\/\/(www\.)?(?<domain>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6})\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm)];
 	const domainMapping = [
 		["twitter.com", "vxtwitter.com"],
 		// ["tiktok.com", "kktiktok.com"],
@@ -111,12 +111,13 @@ async function FixAllLinkTypes(message, authorSettings) {
 		const currentLinkMatch = linkMatches[i];
 		let newLinkMessage = ``;
 		const fullLinkMatch = currentLinkMatch[0];
+		const domain = currentLinkMatch.groups["domain"];
 
 		for (const domainMap of domainMapping) {
 			const normalDomain = domainMap[0];
 			const fixedDomain = domainMap[1];
 
-			if (fullLinkMatch.includes(normalDomain) && !fullLinkMatch.includes(fixedDomain)) {
+			if (domain === normalDomain) {
 				newLinkMessage = currentLinkMatch[0].replace(normalDomain, fixedDomain);
 				newLinkMessage = `${newLinkMessage} | <${currentLinkMatch[0]}>`;
 			}
