@@ -139,7 +139,7 @@ async function FixAllLinkTypes(message, authorSettings) {
 		// const randomMessage = azarIsms[randomIndex];
 		if (message.reference) {
 			const originalMessage = await message.channel.messages.fetch(message.reference.messageId);
-			await originalMessage.reply({ content: `Testing ${message.author}:\n\n${fullMessage}`, ephemeral: false });
+			await originalMessage.reply({ content: `From ${message.author}:\n\n${fullMessage}`, ephemeral: false });
 		}
 		else {
 			// await message.channel.reply(`From ${message.author}:\n\n${fullMessage}`);
