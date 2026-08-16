@@ -104,7 +104,7 @@ async function FixAllLinkTypes(message, authorSettings) {
 		// ["tiktok.com", "kktiktok.com"],
 		["x.com", "fixvx.com"],
 		["reddit.com", "vxreddit.com"],
-		["instagram.com", "vxinstagram.com"],
+		["instagram.com", "kkclip.com"],
 	];
 
 	for (let i = 0; i < linkMatches.length; i++) {
