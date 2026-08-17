@@ -81,7 +81,6 @@ try {
 	console.log('Error:', e.stack);
 }
 
-
 async function FixAllLinkTypes(message, authorSettings) {
 	const botAuthorIds = [
 		"1197601555512316064",
@@ -99,21 +98,17 @@ async function FixAllLinkTypes(message, authorSettings) {
 	}
 
 	let linkMatches = [...message.content.matchAll(/\bhttps?:\/\/(www\.)?(?<domain>[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6})\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm)];
-	const domainMapping = [
-		["twitter.com", "vxtwitter.com"],
-		// ["tiktok.com", "kktiktok.com"],
-		["x.com", "fixvx.com"],
-		["reddit.com", "vxreddit.com"],
-		["instagram.com", "kkclip.com"],
-	];
+	const sitesJson = fs.readFileSync('./sites.json', 'utf8');
+
+	const domainMapping = JSON.parse(sitesJson);
 
 	for (let i = 0; i < linkMatches.length; i++) {
 		const currentLinkMatch = linkMatches[i];
-		let newLinkMessage = ``;
+		let newLinkMessage = ``; 
 		const fullLinkMatch = currentLinkMatch[0];
 		const domain = currentLinkMatch.groups["domain"];
 
-		for (const domainMap of domainMapping) {
+		for (const domainMap of domainMapping.sites) {
 			const normalDomain = domainMap[0];
 			const fixedDomain = domainMap[1];
 
